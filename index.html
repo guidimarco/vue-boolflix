@@ -32,7 +32,8 @@
                 <div class="search">
                     <input type="search"
                     v-model="userSearch"
-                    placeholder="Cerca film o serie tv">
+                    placeholder="Cerca film o serie tv"
+                    @keyup.enter="searchFilm">
                     <button
                     type="button" name="button"
                     @click="searchFilm">
@@ -41,9 +42,18 @@
                 </div><!-- END input e button -->
 
                 <!-- film and tv-series: template -->
-                <ul>
+                <ul v-for="film in films">
                     <li>
-
+                        Titolo: {{ film.title }}
+                    </li>
+                    <li>
+                        Lingua originale: {{ film.original_language }}
+                    </li>
+                    <li>
+                        Titolo (in lingua originale): {{ film.original_title }}
+                    </li>
+                    <li>
+                        Voto: {{ film.vote_average }}
                     </li>
                 </ul><!-- film and tv-series -->
             </div><!-- END .container -->
