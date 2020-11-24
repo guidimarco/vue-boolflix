@@ -1,7 +1,7 @@
 var app = new Vue({ // VUE INSTANCE
     el: "#root",
     data: {
-        userSearch: "caccia",
+        userSearch: "",
         films: [],
     },
     methods: {
@@ -17,7 +17,6 @@ var app = new Vue({ // VUE INSTANCE
                     let currentSearch = list.data.results;
 
                     currentSearch = currentSearch.filter( (item) => {
-                        console.log(item.media_type);
                         return item.media_type != "person";
                     });
 
@@ -43,6 +42,6 @@ var app = new Vue({ // VUE INSTANCE
         },
     },
     mounted: function() {
-        this.searchFilm();
+        
     },
 });

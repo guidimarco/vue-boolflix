@@ -53,7 +53,7 @@
                     </li>
                     <!-- END stamp title or name -->
 
-                    <li>
+                    <li><!-- lang -->
                         Lingua originale: {{ film.original_language }}
                         <img
                         :src="'assets/flags/' + film.original_language + '.png'"
@@ -70,11 +70,10 @@
                     </li>
                     <!-- END stamp title or name -->
 
-                    <li>
+                    <li><!-- voto -->
                         Voto: {{ newVote(index) }}
-                        <ul>
+                        <ul><!-- star -->
                             <li>
-                                <!-- star -->
                                 <i v-for="(star, i) in 5"
                                 class="fa-star"
                                 :class="i < newVote(index) ? 'fas' : 'far'"
@@ -83,6 +82,7 @@
                         </ul>
                         ({{ film.vote_average }})
                     </li>
+
                 </ul><!-- film and tv-series -->
             </div><!-- END .container -->
         </div><!-- END #root -->
