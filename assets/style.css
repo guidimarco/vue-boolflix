@@ -29,7 +29,7 @@ li {
 }
 
 .film-card {
-    width: 200px; height: 200px;
+    width: 200px; min-height: 200px;
     float: left;
     margin: 20px; padding: 10px;
     border: 1px solid black;
