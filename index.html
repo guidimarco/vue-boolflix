@@ -49,6 +49,10 @@
                     </li>
                     <li>
                         Lingua originale: {{ film.original_language }}
+                        <img
+                        :src="'assets/flags/' + film.original_language + '.png'"
+                        @error="setAltFlag"
+                        :alt="'flag img ' + film.original_language">
                     </li>
                     <li>
                         Titolo (in lingua originale): {{ film.original_title }}

@@ -34,5 +34,8 @@ li {
     margin: 20px; padding: 10px;
     border: 1px solid black;
 }
+.film-card img {
+    width: 20px;
+}
 
 /* </1-fold #root */
