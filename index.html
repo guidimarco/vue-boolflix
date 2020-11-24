@@ -10,6 +10,7 @@
         <!-- font: tipo, weight -->
 
         <!-- icone - fontawesome -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
 
         <!-- responsive -->
         <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
@@ -42,7 +43,7 @@
                 </div><!-- END input e button -->
 
                 <!-- film and tv-series: template -->
-                <ul v-for="film in films" class="film-card">
+                <ul v-for="(film, index) in films" class="film-card">
                     <li>
                         Titolo: {{ film.title }}
                     </li>
@@ -53,7 +54,17 @@
                         Titolo (in lingua originale): {{ film.original_title }}
                     </li>
                     <li>
-                        Voto: {{ film.vote_average }}
+                        Voto: {{ newVote(index) }}
+                        <ul>
+                            <li>
+                                <!-- star -->
+                                <i v-for="(star, i) in 5"
+                                class="fa-star"
+                                :class="i < newVote(index) ? 'fas' : 'far'"
+                                ></i>
+                            </li>
+                        </ul>
+                        ({{ film.vote_average }})
                     </li>
                 </ul><!-- film and tv-series -->
             </div><!-- END .container -->

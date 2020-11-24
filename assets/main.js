@@ -15,14 +15,22 @@ var app = new Vue({ // VUE INSTANCE
                     }
                 }).then( (filmsList) => {
                     this.films = filmsList.data.results;
-                    console.log(this.films);
                 })
             ;
 
             // reset the search
             this.userSearch = "";
         },
+        newVote: function(filmIndex) {
+            // local var
+            let thisVote = app.films[filmIndex].vote_average; // old vote 0-10
+            let newVote; // computed vote 1-5
+
+            // new-vote function: from 0 to 5
+            return newVote = Math.round(thisVote / 2);
+        },
     },
+
     mounted: function() {
         this.searchFilm();
     },
