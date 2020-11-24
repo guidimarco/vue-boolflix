@@ -1,16 +1,14 @@
 var app = new Vue({ // VUE INSTANCE
     el: "#root",
     data: {
-        userSearch: "",
+        userSearch: "batman",
         films: [],
     },
     methods: {
         searchFilm: function() {
-
             // axios request --> films and tv series
             axios
-                .get("https://api.themoviedb.org/3/search/movie", {
-                    params: {
+                .get("https://api.themoviedb.org/3/search/movie", { params: {
                         api_key: "f14b811e77f424ab83b5ac2e25d349b8", // api key
                         query: this.userSearch,
                         language: "it"
@@ -24,8 +22,8 @@ var app = new Vue({ // VUE INSTANCE
             // reset the search
             this.userSearch = "";
         },
-        prova: function() {
-            console.log("hey");
-        }
+    },
+    mounted: function() {
+        this.searchFilm();
     },
 });

@@ -16,7 +16,23 @@ li {
 
 /* <1-fold #root */
 #root {
-    
+
+}
+
+.container {
+    padding: 20px;
+}
+.container::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.film-card {
+    width: 200px; height: 200px;
+    float: left;
+    margin: 20px; padding: 10px;
+    border: 1px solid black;
 }
 
 /* </1-fold #root */
