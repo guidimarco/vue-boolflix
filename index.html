@@ -44,9 +44,15 @@
 
                 <!-- film and tv-series: template -->
                 <ul v-for="(film, index) in films" class="film-card">
-                    <li>
+                    <!-- stamp title or name -->
+                    <li v-if="film.title">
                         Titolo: {{ film.title }}
                     </li>
+                    <li v-else>
+                        Nome serie: {{ film.name }}
+                    </li>
+                    <!-- END stamp title or name -->
+
                     <li>
                         Lingua originale: {{ film.original_language }}
                         <img
@@ -54,9 +60,16 @@
                         @error="setAltFlag"
                         :alt="'flag img ' + film.original_language">
                     </li>
-                    <li>
+
+                    <!-- stamp title or name -->
+                    <li v-if="film.original_title">
                         Titolo (in lingua originale): {{ film.original_title }}
                     </li>
+                    <li v-else>
+                        Nome serie (in lingua originale): {{ film.original_name }}
+                    </li>
+                    <!-- END stamp title or name -->
+
                     <li>
                         Voto: {{ newVote(index) }}
                         <ul>

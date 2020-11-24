@@ -1,7 +1,7 @@
 var app = new Vue({ // VUE INSTANCE
     el: "#root",
     data: {
-        userSearch: "batman",
+        userSearch: "caccia",
         films: [],
     },
     methods: {
@@ -13,8 +13,15 @@ var app = new Vue({ // VUE INSTANCE
                         query: this.userSearch, // user's search --> see data
                         language: "it",
                     }
-                }).then( (filmsList) => {
-                    this.films = filmsList.data.results;
+                }).then( (list) => {
+                    let currentSearch = list.data.results;
+
+                    currentSearch = currentSearch.filter( (item) => {
+                        console.log(item.media_type);
+                        return item.media_type != "person";
+                    });
+
+                    this.films = currentSearch;
                 })
             ;
 
