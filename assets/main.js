@@ -29,6 +29,9 @@ var app = new Vue({ // VUE INSTANCE
                 this.isLoading = true; // START the loading-render
                 this.searchMsg = thisSearch; // change the msg
 
+                // close the search bar
+                this.toggleSearchBar();
+
                 // axios request --> films and tv series
                 axios
                     .get(filmApiUrl + "search/multi", { params: {
@@ -98,7 +101,10 @@ var app = new Vue({ // VUE INSTANCE
         toggleSearchBar: function() {
             if (!this.inputClass) {
                 // if current class == "" --> add "visible"
-                this.inputClass = "visible";
+                this.inputClass = "search-on";
+
+                // focus the input
+                this.$refs.searchInput.focus();
             } else {
                 this.inputClass = "";
             }
