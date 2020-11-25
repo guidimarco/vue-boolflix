@@ -1,3 +1,7 @@
+// API VAR
+const apiUrl = "https://api.themoviedb.org/3/";
+const myApiKey = "f14b811e77f424ab83b5ac2e25d349b8"; // my api key
+
 var app = new Vue({ // VUE INSTANCE
     el: "#root",
     data: {
@@ -8,8 +12,8 @@ var app = new Vue({ // VUE INSTANCE
         searchFilm: function() {
             // axios request --> films and tv series
             axios
-                .get("https://api.themoviedb.org/3/search/multi", { params: {
-                        api_key: "f14b811e77f424ab83b5ac2e25d349b8", // api key
+                .get(apiUrl + "search/multi", { params: {
+                        api_key: myApiKey,
                         query: this.userSearch, // user's search --> see data
                         language: "it",
                     }
@@ -42,6 +46,6 @@ var app = new Vue({ // VUE INSTANCE
         },
     },
     mounted: function() {
-        
+
     },
 });
