@@ -7,6 +7,9 @@ const posterSize = "w300"; // backdrop size (width 300px)
 var app = new Vue({ // VUE INSTANCE
     el: "#root",
     data: {
+        myFlags: "de en es fr it ja pt", // all my flags
+        altFlag: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/No_flag.svg/1280px-No_flag.svg.png", // alternative flag
+        inputClass: "",
         searchText: "",
         searchMsg: "",
         isLoading: false,
@@ -47,7 +50,7 @@ var app = new Vue({ // VUE INSTANCE
                 ;
             } // END if: get films
         },
-        getBgrPath: function(filmIndex) {
+        setCardBgr: function(filmIndex) {
             // local var
             let thisPath = app.films[filmIndex].backdrop_path; // this backdrop-path
             let thisBgrStyle; // this background style (url or white)
@@ -61,10 +64,20 @@ var app = new Vue({ // VUE INSTANCE
             }
             return thisBgrStyle;
         },
-        setAltBgr: function(event) {
-            let altFlagBgr = "background-color: white";
+        setFlag: function(filmIndex) {
+            // local var
+            let thisLang = app.films[filmIndex].original_language; // this original lang
+            let flagUrl; // flag src
 
-            event.target.style = altFlagBgr;
+            if (this.myFlags.includes(thisLang)) {
+                // set local src
+                flagUrl = "assets/flags/" + thisLang + ".png";
+            } else {
+                // set alternative url
+                flagUrl = this.altFlag;
+            }
+
+            return flagUrl;
         },
         isFilm: function(filmIndex) {
             // return true if it's film, false if it's a serie
@@ -82,10 +95,13 @@ var app = new Vue({ // VUE INSTANCE
             // new-vote function: from 0 to 5
             return nStars = Math.round(thisVote / 2);
         },
-        setAltFlag: function(event) {
-            let altFlagSrc = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/No_flag.svg/1280px-No_flag.svg.png";
-
-            event.target.src = altFlagSrc;
+        toggleSearchBar: function() {
+            if (!this.inputClass) {
+                // if current class == "" --> add "visible"
+                this.inputClass = "visible";
+            } else {
+                this.inputClass = "";
+            }
         },
     },
     mounted: function() {

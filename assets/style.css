@@ -48,25 +48,41 @@ h3 span {/* original title */
     max-width: 1240px;
     margin: auto;
 }
-.container::after {
-    content: "";
-    display: table;
-    clear: both;
-}
 
 /* #2-fold header */
 header {
+    height: 70px;
     background-image: linear-gradient(to bottom,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
 }
-
-.header-left,
-.header-right {
-    width: 50%; height: 70px;
-    float: left;
+header .container {
+    display: flex;
+    justify-content: space-between; align-items: center;
 }
+
 .header-right {
     display: flex;
     justify-content: flex-end; align-items: center;
+    border: solid 1px rgba(255,255,255,.85);
+    padding: 10px;
+}
+
+.header-right button {
+    background-color: transparent; color: #fff;
+    border-width: 0;
+    font-size: 15px;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+}
+.header-right button:focus {
+    /* border-width: 0; */
+    outline-width: 0;
+}
+
+.header-right input {
+    width: 0;
+}
+.header-right input.visible {
+    width: 600px;
+    background: rgba(0,0,0,.75);
 }
 
 /* #/2-fold header */
@@ -124,13 +140,27 @@ header {
     display: none;
 }
 .film-card:hover .film-lang {
-    display: block;
+    display: flex;
     position: absolute;
-    top: 90%; left: -1%;
+    top: 96%; left: 4%;
+    border-radius: 5px;
+    justify-content: center;
+    text-transform: uppercase;
+    align-items: center;
+}
+.film-card:hover .film-lang span {
+    color: rgba(0, 0, 0, 1);
+    font-weight: bold;
+    font-size: 16px;
+    position: absolute;
+    z-index: 2;
 }
 .film-card:hover .film-lang img {
     width: 35px;
-    transform: rotate(10deg);
+    transform: translate(-50%, -50%);
+    border-radius: 5px;
+    position: absolute;
+    top: 50%; left: 50%;
 }
 .film-card .stars {
     display: none;

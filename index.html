@@ -39,16 +39,19 @@
                     </div><!-- END header-left -->
 
                     <div class="header-right"><!-- search-bar -->
-                        <input type="search"
+
+                        <button
+                        type="button" name="button"
+                        @click="toggleSearchBar">
+                            <i class="fas fa-search"></i>
+                        </button>
+
+                        <input type="search" :class="inputClass"
                         v-model="searchText"
                         placeholder="Cerca film o serie tv"
                         @keyup.enter="getFilms">
 
-                        <button
-                        type="button" name="button"
-                        @click="getFilms">
-                            Cerca
-                        </button>
+
                     </div><!-- END header-right -->
                 </div><!-- END container -->
             </header>
@@ -60,7 +63,8 @@
                     <div class="loading" v-if="isLoading"></div>
                     <div v-else-if="searchMsg" class="card-container">
 
-                        <h2 v-if="films.length"><!-- search-msg -->
+                        <!-- search-msg -->
+                        <h2 v-if="films.length">
                             Dai un occhiata ai titoli correlati:
                             <span>
                                 "{{ searchMsg }}"
@@ -70,12 +74,12 @@
                             Nessun risultato per la tua ricerca di "{{ searchMsg }}".
                         </span>
 
+                        <!-- film card -->
                         <div v-for="(film, index) in films"
                         class="film-card"
-                        :style="getBgrPath(index)">
+                        :style="setCardBgr(index)">
 
                             <div class="film-title">
-
                                 <h3 v-if="isFilm(index)"><!-- film title -->
                                     {{ film.title }} </br>
                                     <span>
@@ -94,8 +98,10 @@
 
                             <!-- lang-flag -->
                             <div class="film-lang">
-                                <img :src="'assets/flags/' + film.original_language + '.png'"
-                                @error="setAltFlag"
+                                <span v-if="setFlag(index) == altFlag">
+                                    {{ film.original_language }}
+                                </span>
+                                <img :src="setFlag(index)"
                                 :alt="'flag img ' + film.original_language">
                             </div>
 
