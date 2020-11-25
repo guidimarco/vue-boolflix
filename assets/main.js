@@ -6,6 +6,7 @@ var app = new Vue({ // VUE INSTANCE
     el: "#root",
     data: {
         searchText: "",
+        searchMsg: "",
         isLoading: false,
         films: [],
     },
@@ -21,6 +22,7 @@ var app = new Vue({ // VUE INSTANCE
                 // local VAR
                 let currentList; // list of films from server
                 this.isLoading = true; // START the loading-render
+                this.searchMsg = thisSearch; // change the msg
 
                 // axios request --> films and tv series
                 axios

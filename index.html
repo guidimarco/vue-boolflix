@@ -59,7 +59,16 @@
                     <div class="loading" v-if="isLoading">
                         caricaaaaaa
                     </div>
-                    <div v-else>
+                    <div v-else-if="searchMsg">
+
+                        <h2 class="search-msg"
+                        v-if="films.length"><!-- search-msg -->
+                            Dai un occhiata ai titoli correlati: {{ searchMsg }}
+                        </h2>
+                        <span v-else><!-- search-msg: no results -->
+                            Nessun risultato per la tua ricerca di "{{ searchMsg }}".
+                        </span>
+
                         <ul v-for="(film, index) in films" class="film-card">
                             <!-- stamp title or name -->
                             <li v-if="film.title">
