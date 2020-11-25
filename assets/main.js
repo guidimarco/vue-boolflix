@@ -50,10 +50,21 @@ var app = new Vue({ // VUE INSTANCE
         getBgrPath: function(filmIndex) {
             // local var
             let thisPath = app.films[filmIndex].backdrop_path; // this backdrop-path
-            let thisBgrPath; // url of the poster
+            let thisBgrStyle; // this background style (url or white)
 
-            // assembly url and return it
-            return thisBgrPath = "background-image: url(\"" + posterUrl + posterSize + thisPath + "\";";
+            if (thisPath != null) {
+                // it's not null --> assembly url and return it
+                thisBgrStyle = "background-image: url(\"" + posterUrl + posterSize + thisPath + "\";";
+            } else {
+                // it's null --> background white
+                thisBgrStyle = "background-color: white;";
+            }
+            return thisBgrStyle;
+        },
+        setAltBgr: function(event) {
+            let altFlagBgr = "background-color: white";
+
+            event.target.style = altFlagBgr;
         },
         isFilm: function(filmIndex) {
             // return true if it's film, false if it's a serie
@@ -61,7 +72,7 @@ var app = new Vue({ // VUE INSTANCE
             // local var
             let thisType = app.films[filmIndex].media_type; // this backdrop-path
 
-            return thisType = "movie";
+            return thisType == "movie";
         },
         nStars: function(filmIndex) {
             // local var

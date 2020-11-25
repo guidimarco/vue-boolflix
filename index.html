@@ -5,9 +5,10 @@
         <title>Boolflix</title>
 
         <!-- favicon -->
-        <!-- <link rel="shortcut icon" href="https://www.scdn.co/i/_global/favicon.png"> -->
+        <link rel="shortcut icon" href="https://www.netflix.com/favicon.ico">
 
         <!-- font: tipo, weight -->
+        <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap" rel="stylesheet">
 
         <!-- icone - fontawesome -->
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous">
@@ -56,16 +57,16 @@
                 <div class="container films-container">
 
                     <!-- film and tv-series: template -->
-                    <div class="loading" v-if="isLoading">
-                        caricaaaaaa
-                    </div>
+                    <div class="loading" v-if="isLoading"></div>
                     <div v-else-if="searchMsg" class="card-container">
 
-                        <h2 class="search-msg"
-                        v-if="films.length"><!-- search-msg -->
-                            Dai un occhiata ai titoli correlati: {{ searchMsg }}
+                        <h2 v-if="films.length"><!-- search-msg -->
+                            Dai un occhiata ai titoli correlati:
+                            <span>
+                                "{{ searchMsg }}"
+                            </span>
                         </h2>
-                        <span v-else><!-- search-msg: no results -->
+                        <span class="no-card" v-else><!-- search-msg: no results -->
                             Nessun risultato per la tua ricerca di "{{ searchMsg }}".
                         </span>
 
@@ -75,25 +76,28 @@
 
                             <div class="film-title">
 
-                                <h3 v-if="isFilm"><!-- film title -->
+                                <h3 v-if="isFilm(index)"><!-- film title -->
                                     {{ film.title }} </br>
                                     <span>
-                                        {{ film.original_title }}
+                                        {{ film.original_title.substring(0, 24) }}
+                                        <span v-if="film.original_title.length > 25">
+                                        </span>
                                     </span>
                                 </h3><h3 v-else><!-- name tv serie -->
                                     {{ film.name }} </br>
                                     <span>
-                                        {{ film.original_name }}
+                                        {{ film.original_name.substring(0, 24) }}
                                     </span>
                                 </h3><!-- END stamp title or name -->
 
                             </div><!-- END film-title -->
 
                             <!-- lang-flag -->
-                            <img class="flag-img"
-                            :src="'assets/flags/' + film.original_language + '.png'"
-                            @error="setAltFlag"
-                            :alt="'flag img ' + film.original_language">
+                            <div class="film-lang">
+                                <img :src="'assets/flags/' + film.original_language + '.png'"
+                                @error="setAltFlag"
+                                :alt="'flag img ' + film.original_language">
+                            </div>
 
                             <div class="stars"><!-- voto -->
                                 <i v-for="i in 5"
