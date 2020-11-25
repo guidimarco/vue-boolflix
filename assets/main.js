@@ -47,13 +47,13 @@ var app = new Vue({ // VUE INSTANCE
                 ;
             } // END if: get films
         },
-        getPoster: function(filmIndex) {
+        getBgrPath: function(filmIndex) {
             // local var
             let thisPath = app.films[filmIndex].backdrop_path; // this backdrop-path
-            let currentPosterUrl; // url of the poster
+            let thisBgrPath; // url of the poster
 
             // assembly url and return it
-            return currentPosterUrl = posterUrl + posterSize + thisPath;
+            return thisBgrPath = "background-image: url(" + posterUrl + posterSize + thisPath + ";";
         },
         nStars: function(filmIndex) {
             // local var

@@ -69,8 +69,9 @@
                             Nessun risultato per la tua ricerca di "{{ searchMsg }}".
                         </span>
 
-                        <ul v-for="(film, index) in films" class="film-card">
-                            <img :src="getPoster(index)" alt="">
+                        <ul v-for="(film, index) in films"
+                        class="film-card"
+                        :style="getBgrPath(index)">
 
                             <!-- stamp title or name -->
                             <li v-if="film.title">
