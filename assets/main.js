@@ -45,18 +45,18 @@ var app = new Vue({ // VUE INSTANCE
                 ;
             } // END if: get films
         },
-        newVote: function(filmIndex) {
+        nStars: function(filmIndex) {
             // local var
             let thisVote = app.films[filmIndex].vote_average; // old vote 0-10
-            let newVote; // computed vote 1-5
+            let nStars; // number of stars
 
             // new-vote function: from 0 to 5
-            return newVote = Math.round(thisVote / 2);
+            return nStars = Math.round(thisVote / 2);
         },
         setAltFlag: function(event) {
-            let srcNoFlag = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/No_flag.svg/1280px-No_flag.svg.png";
+            let altFlagSrc = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/No_flag.svg/1280px-No_flag.svg.png";
 
-            event.target.src = srcNoFlag;
+            event.target.src = altFlagSrc;
         },
     },
     mounted: function() {

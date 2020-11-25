@@ -97,12 +97,12 @@
                             <!-- END stamp title or name -->
 
                             <li><!-- voto -->
-                                Voto: {{ newVote(index) }}
+                                Voto: {{ nStars(index) }}
                                 <ul><!-- star -->
                                     <li>
-                                        <i v-for="(star, i) in 5"
+                                        <i v-for="i in 5"
                                         class="fa-star"
-                                        :class="i < newVote(index) ? 'fas' : 'far'"
+                                        :class="i <= nStars(index) ? 'fas' : 'far'"
                                         ></i>
                                     </li>
                                 </ul>
