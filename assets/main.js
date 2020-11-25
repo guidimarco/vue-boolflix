@@ -1,6 +1,8 @@
 // API VAR
-const apiUrl = "https://api.themoviedb.org/3/";
 const myApiKey = "f14b811e77f424ab83b5ac2e25d349b8"; // my api key
+const filmApiUrl = "https://api.themoviedb.org/3/"; // api url for films and series
+const posterUrl = "https://image.tmdb.org/t/p/"; // api url for posters and backdrop
+const posterSize = "w300"; // backdrop size (width 300px)
 
 var app = new Vue({ // VUE INSTANCE
     el: "#root",
@@ -26,7 +28,7 @@ var app = new Vue({ // VUE INSTANCE
 
                 // axios request --> films and tv series
                 axios
-                    .get(apiUrl + "search/multi", { params: {
+                    .get(filmApiUrl + "search/multi", { params: {
                             api_key: myApiKey,
                             query: thisSearch, // user's search --> see data
                             language: "it",
@@ -44,6 +46,14 @@ var app = new Vue({ // VUE INSTANCE
                     })
                 ;
             } // END if: get films
+        },
+        getPoster: function(filmIndex) {
+            // local var
+            let thisPath = app.films[filmIndex].backdrop_path; // this backdrop-path
+            let currentPosterUrl; // url of the poster
+
+            // assembly url and return it
+            return currentPosterUrl = posterUrl + posterSize + thisPath;
         },
         nStars: function(filmIndex) {
             // local var

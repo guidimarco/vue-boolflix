@@ -70,6 +70,8 @@
                         </span>
 
                         <ul v-for="(film, index) in films" class="film-card">
+                            <img :src="getPoster(index)" alt="">
+
                             <!-- stamp title or name -->
                             <li v-if="film.title">
                                 Titolo: {{ film.title }}
