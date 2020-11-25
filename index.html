@@ -59,7 +59,7 @@
                     <div class="loading" v-if="isLoading">
                         caricaaaaaa
                     </div>
-                    <div v-else-if="searchMsg">
+                    <div v-else-if="searchMsg" class="card-container">
 
                         <h2 class="search-msg"
                         v-if="films.length"><!-- search-msg -->
@@ -69,60 +69,47 @@
                             Nessun risultato per la tua ricerca di "{{ searchMsg }}".
                         </span>
 
-                        <ul v-for="(film, index) in films"
+                        <div v-for="(film, index) in films"
                         class="film-card"
                         :style="getBgrPath(index)">
 
-                            <!-- stamp title or name -->
-                            <li v-if="film.title">
-                                Titolo: {{ film.title }}
-                            </li>
-                            <li v-else>
-                                Nome serie: {{ film.name }}
-                            </li>
-                            <!-- END stamp title or name -->
+                            <div class="film-title">
 
-                            <li><!-- lang -->
-                                Lingua originale: {{ film.original_language }}
-                                <img
-                                :src="'assets/flags/' + film.original_language + '.png'"
-                                @error="setAltFlag"
-                                :alt="'flag img ' + film.original_language">
-                            </li>
+                                <h3 v-if="isFilm"><!-- film title -->
+                                    {{ film.title }} </br>
+                                    <span>
+                                        {{ film.original_title }}
+                                    </span>
+                                </h3><h3 v-else><!-- name tv serie -->
+                                    {{ film.name }} </br>
+                                    <span>
+                                        {{ film.original_name }}
+                                    </span>
+                                </h3><!-- END stamp title or name -->
 
-                            <!-- stamp title or name -->
-                            <li v-if="film.original_title">
-                                Titolo (in lingua originale): {{ film.original_title }}
-                            </li>
-                            <li v-else>
-                                Nome serie (in lingua originale): {{ film.original_name }}
-                            </li>
-                            <!-- END stamp title or name -->
+                            </div><!-- END film-title -->
 
-                            <li><!-- voto -->
-                                Voto: {{ nStars(index) }}
-                                <ul><!-- star -->
-                                    <li>
-                                        <i v-for="i in 5"
-                                        class="fa-star"
-                                        :class="i <= nStars(index) ? 'fas' : 'far'"
-                                        ></i>
-                                    </li>
-                                </ul>
-                                ({{ film.vote_average }})
-                            </li>
+                            <!-- lang-flag -->
+                            <img class="flag-img"
+                            :src="'assets/flags/' + film.original_language + '.png'"
+                            @error="setAltFlag"
+                            :alt="'flag img ' + film.original_language">
 
-                        </ul><!-- film and tv-series -->
-                    </div>
+                            <div class="stars"><!-- voto -->
+                                <i v-for="i in 5"
+                                class="fa-star"
+                                :class="i <= nStars(index) ? 'fas' : 'far'"
+                                ></i>
+                            </div>
+                        </div><!-- film and tv-series -->
+
+                    </div><!-- END card-container -->
 
 
                 </div><!-- END container -->
+
             </main>
-            <div class="container">
 
-
-
-            </div><!-- END .container -->
         </div><!-- END #root -->
 
         <!-- javascript -->

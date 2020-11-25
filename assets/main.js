@@ -53,7 +53,15 @@ var app = new Vue({ // VUE INSTANCE
             let thisBgrPath; // url of the poster
 
             // assembly url and return it
-            return thisBgrPath = "background-image: url(" + posterUrl + posterSize + thisPath + ";";
+            return thisBgrPath = "background-image: url(\"" + posterUrl + posterSize + thisPath + "\";";
+        },
+        isFilm: function(filmIndex) {
+            // return true if it's film, false if it's a serie
+
+            // local var
+            let thisType = app.films[filmIndex].media_type; // this backdrop-path
+
+            return thisType = "movie";
         },
         nStars: function(filmIndex) {
             // local var
