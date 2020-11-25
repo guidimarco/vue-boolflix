@@ -28,62 +28,82 @@
     <body>
 
         <div id="root">
+
+            <header>
+                <div class="container">
+                    <div class="header-left"><!-- logo -->
+                        <h1>
+                            Boolflix
+                        </h1>
+                    </div><!-- END header-left -->
+
+                    <div class="header-right"><!-- search-bar -->
+                        <input type="search"
+                        v-model="userSearch"
+                        placeholder="Cerca film o serie tv"
+                        @keyup.enter="searchFilm">
+
+                        <button
+                        type="button" name="button"
+                        @click="searchFilm">
+                            Cerca
+                        </button>
+                    </div><!-- END header-right -->
+                </div><!-- END container -->
+            </header>
+
+            <main>
+                <div class="container films-container">
+                    
+                    <!-- film and tv-series: template -->
+                    <ul v-for="(film, index) in films" class="film-card">
+                        <!-- stamp title or name -->
+                        <li v-if="film.title">
+                            Titolo: {{ film.title }}
+                        </li>
+                        <li v-else>
+                            Nome serie: {{ film.name }}
+                        </li>
+                        <!-- END stamp title or name -->
+
+                        <li><!-- lang -->
+                            Lingua originale: {{ film.original_language }}
+                            <img
+                            :src="'assets/flags/' + film.original_language + '.png'"
+                            @error="setAltFlag"
+                            :alt="'flag img ' + film.original_language">
+                        </li>
+
+                        <!-- stamp title or name -->
+                        <li v-if="film.original_title">
+                            Titolo (in lingua originale): {{ film.original_title }}
+                        </li>
+                        <li v-else>
+                            Nome serie (in lingua originale): {{ film.original_name }}
+                        </li>
+                        <!-- END stamp title or name -->
+
+                        <li><!-- voto -->
+                            Voto: {{ newVote(index) }}
+                            <ul><!-- star -->
+                                <li>
+                                    <i v-for="(star, i) in 5"
+                                    class="fa-star"
+                                    :class="i < newVote(index) ? 'fas' : 'far'"
+                                    ></i>
+                                </li>
+                            </ul>
+                            ({{ film.vote_average }})
+                        </li>
+
+                    </ul><!-- film and tv-series -->
+
+                </div><!-- END container -->
+            </main>
             <div class="container">
-                <!-- input e button -->
-                <div class="search">
-                    <input type="search"
-                    v-model="userSearch"
-                    placeholder="Cerca film o serie tv"
-                    @keyup.enter="searchFilm">
-                    <button
-                    type="button" name="button"
-                    @click="searchFilm">
-                        Cerca
-                    </button>
-                </div><!-- END input e button -->
 
-                <!-- film and tv-series: template -->
-                <ul v-for="(film, index) in films" class="film-card">
-                    <!-- stamp title or name -->
-                    <li v-if="film.title">
-                        Titolo: {{ film.title }}
-                    </li>
-                    <li v-else>
-                        Nome serie: {{ film.name }}
-                    </li>
-                    <!-- END stamp title or name -->
 
-                    <li><!-- lang -->
-                        Lingua originale: {{ film.original_language }}
-                        <img
-                        :src="'assets/flags/' + film.original_language + '.png'"
-                        @error="setAltFlag"
-                        :alt="'flag img ' + film.original_language">
-                    </li>
 
-                    <!-- stamp title or name -->
-                    <li v-if="film.original_title">
-                        Titolo (in lingua originale): {{ film.original_title }}
-                    </li>
-                    <li v-else>
-                        Nome serie (in lingua originale): {{ film.original_name }}
-                    </li>
-                    <!-- END stamp title or name -->
-
-                    <li><!-- voto -->
-                        Voto: {{ newVote(index) }}
-                        <ul><!-- star -->
-                            <li>
-                                <i v-for="(star, i) in 5"
-                                class="fa-star"
-                                :class="i < newVote(index) ? 'fas' : 'far'"
-                                ></i>
-                            </li>
-                        </ul>
-                        ({{ film.vote_average }})
-                    </li>
-
-                </ul><!-- film and tv-series -->
             </div><!-- END .container -->
         </div><!-- END #root -->
 

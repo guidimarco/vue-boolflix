@@ -1,5 +1,4 @@
 /* ||||| RESET E NORMALIZZAZIONE ||||| */
-/* <editor-fold */
 * {
     padding: 0;
     margin: 0;
@@ -14,13 +13,21 @@ li {
     /* display: inline-block; */
 }
 
+h1 {/* boolflix in header */
+    color: red;
+    line-height: 70px;
+}
+
 /* <1-fold #root */
 #root {
-
+    height: 100vh;
+    background-color: #141414;
+    overflow-y: auto;
 }
 
 .container {
-    padding: 20px;
+    max-width: 1160px;
+    margin: auto;
 }
 .container::after {
     content: "";
@@ -28,14 +35,38 @@ li {
     clear: both;
 }
 
+/* #2-fold header */
+header {
+    background-image: linear-gradient(to bottom,rgba(0,0,0,.7) 10%,rgba(0,0,0,0));
+}
+
+.header-left,
+.header-right {
+    width: 50%; height: 70px;
+    float: left;
+}
+.header-right {
+    display: flex;
+    justify-content: flex-end; align-items: center;
+}
+
+/* #/2-fold header */
+
+/* #2-fold main */
+.films-container {
+    padding: 20px 0;
+}
+
 .film-card {
     width: 200px; min-height: 200px;
     float: left;
-    margin: 20px; padding: 10px;
-    border: 1px solid black;
+    padding: 10px; margin: 10px;
+    border: 1px solid white; color: white;
 }
 .film-card img {
     width: 20px;
 }
+
+/* #/2-fold main */
 
 /* </1-fold #root */
