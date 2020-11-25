@@ -6,6 +6,7 @@ var app = new Vue({ // VUE INSTANCE
     el: "#root",
     data: {
         searchText: "",
+        isLoading: false,
         films: [],
     },
     methods: {
@@ -19,6 +20,7 @@ var app = new Vue({ // VUE INSTANCE
             if (thisSearch) {
                 // local VAR
                 let currentList; // list of films from server
+                this.isLoading = true; // START the loading-render
 
                 // axios request --> films and tv series
                 axios
@@ -30,11 +32,13 @@ var app = new Vue({ // VUE INSTANCE
                     }).then( (filmsResults) => {
                         currentList = filmsResults.data.results;
 
+                        // filter the results: discard the person
                         currentList = currentList.filter( (item) => {
                             return item.media_type != "person";
                         });
 
-                        this.films = currentList;
+                        this.films = currentList; // push the list into the data
+                        this.isLoading = false; // END the loading-render
                     })
                 ;
             } // END if: get films

@@ -56,47 +56,53 @@
                 <div class="container films-container">
 
                     <!-- film and tv-series: template -->
-                    <ul v-for="(film, index) in films" class="film-card">
-                        <!-- stamp title or name -->
-                        <li v-if="film.title">
-                            Titolo: {{ film.title }}
-                        </li>
-                        <li v-else>
-                            Nome serie: {{ film.name }}
-                        </li>
-                        <!-- END stamp title or name -->
+                    <div class="loading" v-if="isLoading">
+                        caricaaaaaa
+                    </div>
+                    <div v-else>
+                        <ul v-for="(film, index) in films" class="film-card">
+                            <!-- stamp title or name -->
+                            <li v-if="film.title">
+                                Titolo: {{ film.title }}
+                            </li>
+                            <li v-else>
+                                Nome serie: {{ film.name }}
+                            </li>
+                            <!-- END stamp title or name -->
 
-                        <li><!-- lang -->
-                            Lingua originale: {{ film.original_language }}
-                            <img
-                            :src="'assets/flags/' + film.original_language + '.png'"
-                            @error="setAltFlag"
-                            :alt="'flag img ' + film.original_language">
-                        </li>
+                            <li><!-- lang -->
+                                Lingua originale: {{ film.original_language }}
+                                <img
+                                :src="'assets/flags/' + film.original_language + '.png'"
+                                @error="setAltFlag"
+                                :alt="'flag img ' + film.original_language">
+                            </li>
 
-                        <!-- stamp title or name -->
-                        <li v-if="film.original_title">
-                            Titolo (in lingua originale): {{ film.original_title }}
-                        </li>
-                        <li v-else>
-                            Nome serie (in lingua originale): {{ film.original_name }}
-                        </li>
-                        <!-- END stamp title or name -->
+                            <!-- stamp title or name -->
+                            <li v-if="film.original_title">
+                                Titolo (in lingua originale): {{ film.original_title }}
+                            </li>
+                            <li v-else>
+                                Nome serie (in lingua originale): {{ film.original_name }}
+                            </li>
+                            <!-- END stamp title or name -->
 
-                        <li><!-- voto -->
-                            Voto: {{ newVote(index) }}
-                            <ul><!-- star -->
-                                <li>
-                                    <i v-for="(star, i) in 5"
-                                    class="fa-star"
-                                    :class="i < newVote(index) ? 'fas' : 'far'"
-                                    ></i>
-                                </li>
-                            </ul>
-                            ({{ film.vote_average }})
-                        </li>
+                            <li><!-- voto -->
+                                Voto: {{ newVote(index) }}
+                                <ul><!-- star -->
+                                    <li>
+                                        <i v-for="(star, i) in 5"
+                                        class="fa-star"
+                                        :class="i < newVote(index) ? 'fas' : 'far'"
+                                        ></i>
+                                    </li>
+                                </ul>
+                                ({{ film.vote_average }})
+                            </li>
 
-                    </ul><!-- film and tv-series -->
+                        </ul><!-- film and tv-series -->
+                    </div>
+
 
                 </div><!-- END container -->
             </main>

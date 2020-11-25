@@ -55,6 +55,7 @@ header {
 /* #2-fold main */
 .films-container {
     padding: 20px 0;
+    color: white;
 }
 
 .film-card {
