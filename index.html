@@ -39,13 +39,13 @@
 
                     <div class="header-right"><!-- search-bar -->
                         <input type="search"
-                        v-model="userSearch"
+                        v-model="searchText"
                         placeholder="Cerca film o serie tv"
-                        @keyup.enter="searchFilm">
+                        @keyup.enter="getFilms">
 
                         <button
                         type="button" name="button"
-                        @click="searchFilm">
+                        @click="getFilms">
                             Cerca
                         </button>
                     </div><!-- END header-right -->
@@ -54,7 +54,7 @@
 
             <main>
                 <div class="container films-container">
-                    
+
                     <!-- film and tv-series: template -->
                     <ul v-for="(film, index) in films" class="film-card">
                         <!-- stamp title or name -->

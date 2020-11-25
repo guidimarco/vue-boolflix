@@ -5,31 +5,39 @@ const myApiKey = "f14b811e77f424ab83b5ac2e25d349b8"; // my api key
 var app = new Vue({ // VUE INSTANCE
     el: "#root",
     data: {
-        userSearch: "",
+        searchText: "",
         films: [],
     },
     methods: {
-        searchFilm: function() {
-            // axios request --> films and tv series
-            axios
-                .get(apiUrl + "search/multi", { params: {
-                        api_key: myApiKey,
-                        query: this.userSearch, // user's search --> see data
-                        language: "it",
-                    }
-                }).then( (list) => {
-                    let currentSearch = list.data.results;
-
-                    currentSearch = currentSearch.filter( (item) => {
-                        return item.media_type != "person";
-                    });
-
-                    this.films = currentSearch;
-                })
-            ;
-
+        getFilms: function() {
+            // local VAR
+            let thisSearch = this.searchText.trim(); // user's search
             // reset the search
-            this.userSearch = "";
+            this.searchText = "";
+
+            // check: get api only if thisSearch != 0
+            if (thisSearch) {
+                // local VAR
+                let currentList; // list of films from server
+
+                // axios request --> films and tv series
+                axios
+                    .get(apiUrl + "search/multi", { params: {
+                            api_key: myApiKey,
+                            query: thisSearch, // user's search --> see data
+                            language: "it",
+                        }
+                    }).then( (filmsResults) => {
+                        currentList = filmsResults.data.results;
+
+                        currentList = currentList.filter( (item) => {
+                            return item.media_type != "person";
+                        });
+
+                        this.films = currentList;
+                    })
+                ;
+            } // END if: get films
         },
         newVote: function(filmIndex) {
             // local var
