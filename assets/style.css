@@ -141,7 +141,7 @@ header .container {
     display: none;
 }
 .film-card:hover .film-title {
-    display: flex;
+    display: flex; flex-direction: column;
     justify-content: center; align-items: center;
     text-align: center; padding: 10px;
     position: absolute;

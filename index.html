@@ -76,38 +76,31 @@
                         <!-- film card -->
                         <div v-for="(film, index) in films"
                         class="film-card"
-                        :style="setCardBgr(index)">
-
+                        :style="setCardBgr(film.backdrop_path)">
+                            <!-- title -->
                             <div class="film-title">
-                                <h3 v-if="isFilm(index)"><!-- film title -->
-                                    {{ film.title }} <br/>
-                                    <span>
-                                        {{ film.original_title.substring(0, 24) }}
-                                        <span v-if="film.original_title.length > 25">
-                                        </span>
-                                    </span>
-                                </h3><h3 v-else><!-- name tv serie -->
-                                    {{ film.name }} <br/>
-                                    <span>
-                                        {{ film.original_name.substring(0, 24) }}
-                                    </span>
-                                </h3><!-- END stamp title or name -->
-
+                                <h3><!-- film title or serie name -->
+                                    {{ film.title ? film.title : film.name }}
+                                </h3>
+                                <span>
+                                    {{ film.original_title ? film.original_title.substring(0, 24) : film.original_name.substring(0, 24) }}
+                                </span><!-- END stamp original title or name -->
                             </div><!-- END film-title -->
 
                             <!-- lang-flag -->
                             <div class="film-lang">
-                                <span v-if="setFlag(index) == altFlag">
+                                <span v-if="!myFlags.includes(film.original_language)">
                                     {{ film.original_language }}
                                 </span>
-                                <img :src="setFlag(index)"
+                                <img :src="setFlag(film.original_language)"
                                 :alt="'flag img ' + film.original_language">
                             </div>
 
-                            <div class="stars"><!-- voto -->
-                                <i v-for="i in 5"
+                            <!-- vote -->
+                            <div class="stars">
+                                <i v-for="i in maxStars"
                                 class="fa-star"
-                                :class="i <= nStars(index) ? 'fas' : 'far'"
+                                :class="i <= setStars(film.vote_average) ? 'fas' : 'far'"
                                 ></i>
                             </div>
                         </div><!-- film and tv-series -->
