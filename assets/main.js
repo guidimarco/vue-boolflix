@@ -10,10 +10,10 @@ var app = new Vue({ // VUE INSTANCE
         myFlags: "de en es fr it ja pt", // all my flags
         altFlag: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/No_flag.svg/1280px-No_flag.svg.png", // alternative flag
         maxStars: 5, // maximum rate vote
-        inputClass: "",
-        searchText: "",
-        searchMsg: "",
-        isLoading: false,
+        inputClass: "", // css classes for input
+        searchText: "", // search-bar input
+        searchMsg: "", // user's search for display
+        isLoading: false, // boolean for loading
         films: [],
     },
     methods: {
@@ -95,7 +95,7 @@ var app = new Vue({ // VUE INSTANCE
             // return true if it's film, false if it's a serie
 
             // local var
-            let thisType = app.films[filmIndex].media_type; // this backdrop-path
+            let thisType = app.films[filmIndex].media_type; // this media-type
 
             return thisType == "movie";
         },
@@ -115,6 +115,16 @@ var app = new Vue({ // VUE INSTANCE
                 this.$refs.searchInput.focus();
             } else {
                 this.inputClass = "";
+            }
+        },
+        showInfo: function(filmIndex) {
+            // add/remove class to this card (index)
+            thisCard = this.$refs[filmIndex][0]; // this card
+
+            if (thisCard.classList.contains("show-info")) {
+                thisCard.classList.remove("show-info");
+            } else {
+                thisCard.classList.add("show-info");
             }
         },
     },

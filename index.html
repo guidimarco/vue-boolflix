@@ -5,7 +5,7 @@
         <title>Boolflix</title>
 
         <!-- favicon -->
-        <link rel="shortcut icon" href="https://www.netflix.com/favicon.ico">
+        <!-- <link rel="shortcut icon" href="https://www.netflix.com/favicon.ico"> -->
 
         <!-- font: tipo, weight -->
         <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;700&display=swap" rel="stylesheet">
@@ -61,7 +61,6 @@
                     <!-- film and tv-series: template -->
                     <div class="loading" v-if="isLoading"></div>
                     <div v-else-if="searchMsg" class="card-container">
-
                         <!-- search-msg -->
                         <h2 v-if="films.length">
                             Dai un occhiata ai titoli correlati:
@@ -76,16 +75,23 @@
                         <!-- film card -->
                         <div v-for="(film, index) in films"
                         class="film-card"
-                        :style="setCardBgr(film.backdrop_path)">
-                            <!-- title -->
-                            <div class="film-title">
+                        :style="setCardBgr(film.backdrop_path)"
+                        :ref="`${index}`"
+                        @mouseenter="showInfo(index)"
+                        @mouseleave="showInfo(index)">
+
+                            <div class="overlay"></div>
+
+                            <div class="film-info">
+                                <!-- title -->
                                 <h3><!-- film title or serie name -->
                                     {{ film.title ? film.title : film.name }}
                                 </h3>
                                 <span>
                                     {{ film.original_title ? film.original_title.substring(0, 24) : film.original_name.substring(0, 24) }}
                                 </span><!-- END stamp original title or name -->
-                            </div><!-- END film-title -->
+                                <!-- END film-title -->
+                            </div>
 
                             <!-- lang-flag -->
                             <div class="film-lang">
@@ -103,10 +109,9 @@
                                 :class="i <= setStars(film.vote_average) ? 'fas' : 'far'"
                                 ></i>
                             </div>
+
                         </div><!-- film and tv-series -->
-
                     </div><!-- END card-container -->
-
 
                 </div><!-- END container -->
 

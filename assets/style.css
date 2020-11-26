@@ -27,15 +27,7 @@ h2 span {
     font-weight: 700;
     color: white;
 }
-h3 {/* --> into film card: film title or serie name */
-    font-size: 16px;
-    text-transform: uppercase;
-}
-h3 span {/* original title */
-    font-size: 14px;
-    text-transform: none;
-    font-style: italic;
-}
+/* --> h3 into film card: film title or serie name */
 
 /* <1-fold #root */
 #root {
@@ -140,59 +132,88 @@ header .container {
     background-size: cover;
     background-position: center;
 }
-.film-card .film-title {
-    display: none;
+
+.film-card .overlay {
+    display: flex;
+    background-color: rgba(20, 20, 20, 0.9);
+    position: absolute;
+    top: 100%; left: 0; right: 0; bottom: 0;
+    transition: top 1s;
 }
-.film-card:hover .film-title {
+.film-card.show-info .overlay {
+    top: 60%;
+}
+.film-card.show-info .overlay:hover {
+    cursor: pointer;
+}
+
+.film-card .film-info {
     display: flex; flex-direction: column;
     justify-content: center; align-items: center;
-    text-align: center; padding: 10px;
+    padding: 5px 10px 15px;
+    text-align: center;
     position: absolute;
-    top: 40%; left: 0; right: 0; bottom: 0;
-    background-color: rgba(20, 20, 20, 0.9); color: white;
+    top: 60%; left: 0; right: 0; bottom: 0;
+    transition: color 0.2s linear 1s;
 }
-.film-card .film-lang {
-    display: none;
-}
-.film-card:hover .film-lang {
-    display: flex;
-    position: absolute;
-    top: 96%; left: 4%;
-    border-radius: 5px;
-    justify-content: center;
+.film-card .film-info h3 {
+    font-size: 16px;
     text-transform: uppercase;
-    align-items: center;
+    color: rgba(255, 255, 255, 0);
 }
-.film-card:hover .film-lang span {
+.film-card.show-info .film-info h3 {
+    animation: showTitle 1s linear 0.5s 1 normal forwards;
+}
+@keyframes showTitle {
+    0% { color: rgba(255, 255, 255, 0); }
+    100% { color: rgba(255, 255, 255, 1); }
+}
+.film-card .film-info span {
+    display: none;
+    font-size: 14px;
+    text-transform: none;
+    font-style: italic;
+    color: rgba(255, 255, 255, 0);
+}
+
+.film-card .film-lang {
+    display: flex;
+    text-transform: uppercase;
+    justify-content: center; align-items: center;
+    position: absolute; top: 5px; left: 5px;
+    opacity: 0; transition: opacity 1s linear 0.5s;
+}
+.film-card.show-info .film-lang {
+    opacity: 1;
+}
+.film-card .film-lang span {
     color: rgba(0, 0, 0, 1);
     font-weight: bold;
     font-size: 16px;
     position: absolute;
     z-index: 2;
 }
-.film-card:hover .film-lang img {
-    width: 35px;
-    transform: translate(-50%, -50%);
-    border-radius: 5px;
-    position: absolute;
-    top: 50%; left: 50%;
+.film-card .film-lang img {
+    width: 40px;
+    border-radius: 10px;
+    border: 2px solid white;
 }
+
 .film-card .stars {
-    display: none;
-}
-.film-card .stars i {
-    margin: 0 2px;
-}
-.film-card:hover .stars {
     display: flex; align-items: center;
     height: 20px; border-radius: 10px;
     padding: 0 5px;
     background-color: rgba(255, 255, 255, 1);
-    position: absolute;
-    top: 40%; left: 50%;
+    position: absolute; top: 100%; left: 50%;
     transform: translate(-50%, -50%);
-    color: rgba(20, 20, 20, 1);
-    font-size: 12px;
+    color: rgba(20, 20, 20, 1); font-size: 12px;
+    opacity: 0; transition: opacity 1s linear 0.5s;
+}
+.film-card.show-info .stars {
+    opacity: 1;
+}
+.film-card .stars i {
+    margin: 0 2px;
 }
 
 /* #/2-fold main */
