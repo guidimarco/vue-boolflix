@@ -136,6 +136,9 @@ header .container {
     border-radius: 10px;
     padding: 10px; margin: 40px 5px 40px 5px;
     position: relative;
+    background-image: url("https://www.ancebiella.it/wp-content/uploads/2016/01/img-not-found-395x256.jpg");
+    background-size: cover;
+    background-position: center;
 }
 .film-card .film-title {
     display: none;

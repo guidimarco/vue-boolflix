@@ -34,6 +34,9 @@ var app = new Vue({ // VUE INSTANCE
                     }
                 } // current search parameters
 
+                // set the data
+                this.films = [];
+
                 // set the DOM
                 this.isLoading = true; // START the loading-render
                 this.searchMsg = thisSearch; // change the msg
@@ -62,16 +65,17 @@ var app = new Vue({ // VUE INSTANCE
         },
         setCardBgr: function(backdropPath) {
             // backdropPath --> final part of url backdrop-poster
-            let thisBgrStyle; // this background style (url or white)
 
             if (backdropPath != null) {
                 // it's not null --> assembly url and return it
-                thisBgrStyle = "background-image: url(\"" + posterUrl + posterSize + backdropPath + "\";";
-            } else {
-                // it's null --> background white
-                thisBgrStyle = "background-color: white;";
+
+                // local var
+                let thisBgrImg; // this background style (url or white)
+
+                thisBgrImg = "background-image: url(\"" + posterUrl + posterSize + backdropPath + "\";";
+
+                return thisBgrImg;
             }
-            return thisBgrStyle;
         },
         setFlag: function(filmFlag) {
             // filmFlag --> current film language (same as flag)
