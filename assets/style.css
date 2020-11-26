@@ -11,6 +11,10 @@ body {
 
 ul {
     list-style-type: none;
+    text-align: left;
+    text-align: left;
+    list-style-type: circle;
+    margin-left: 15px;
 }
 
 h1 {/* boolflix in header */
@@ -131,6 +135,7 @@ header .container {
     background-image: url("https://www.ancebiella.it/wp-content/uploads/2016/01/img-not-found-395x256.jpg");
     background-size: cover;
     background-position: center;
+    cursor: pointer;
 }
 
 .film-card .overlay {
@@ -143,6 +148,9 @@ header .container {
 .film-card.show-info .overlay {
     top: 60%;
 }
+.film-card.show-info.show-all-info .overlay {
+    top: 0%;
+}
 .film-card.show-info .overlay:hover {
     cursor: pointer;
 }
@@ -154,7 +162,14 @@ header .container {
     text-align: center;
     position: absolute;
     top: 60%; left: 0; right: 0; bottom: 0;
-    transition: color 0.2s linear 1s;
+    transition: top 0.2s linear 1s;
+}
+.film-card.show-info.show-all-info .film-info {
+    animation: showAllInfo 1s linear 0.5s 1 normal forwards;
+}
+@keyframes showAllInfo {
+    0% {  }
+    100% { top: 0%; padding: 15px 10px 15px; align-items: flex-start; }
 }
 .film-card .film-info h3 {
     font-size: 16px;
@@ -168,12 +183,21 @@ header .container {
     0% { color: rgba(255, 255, 255, 0); }
     100% { color: rgba(255, 255, 255, 1); }
 }
-.film-card .film-info span {
-    display: none;
+.film-card.show-info.show-all-info .film-info ul {
+    animation: showAll 1s linear 0.5s 1 normal forwards;
+}
+@keyframes showAll {
+    0% {  }
+    100% { height: unset; color: rgba(255, 255, 255, 1); opacity: 1; }
+}
+.film-card .film-info ul {
+    height: 0;
     font-size: 14px;
     text-transform: none;
-    font-style: italic;
-    color: rgba(255, 255, 255, 0);
+    color: rgba(255, 255, 255, 0); opacity: 0;
+}
+.film-card.show-info.show-all-info .film-info ul {
+    display: inline-block;
 }
 
 .film-card .film-lang {
@@ -185,6 +209,10 @@ header .container {
 }
 .film-card.show-info .film-lang {
     opacity: 1;
+    transition: all 1s linear 0.5s;
+}
+.film-card.show-info.show-all-info .film-lang {
+    opacity: 0;
 }
 .film-card .film-lang span {
     color: rgba(0, 0, 0, 1);

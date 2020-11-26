@@ -118,13 +118,28 @@ var app = new Vue({ // VUE INSTANCE
             }
         },
         showInfo: function(filmIndex) {
-            // add/remove class to this card (index)
+            // add class to this card (index)
             thisCard = this.$refs[filmIndex][0]; // this card
 
-            if (thisCard.classList.contains("show-info")) {
+            thisCard.classList.add("show-info");
+        },
+        showAllInfo: function(filmIndex) {
+            // add class to this card (index)
+            thisCard = this.$refs[filmIndex][0]; // this card
+
+            thisCard.classList.add("show-all-info");
+        },
+        removeInfo: function(filmIndex) {
+            // remove all class to this card (index)
+            thisCard = this.$refs[filmIndex][0]; // this card
+
+            if (thisCard.classList.contains("show-info") && thisCard.classList.contains("show-all-info")) {
+                // all info (enter and click)
                 thisCard.classList.remove("show-info");
+                thisCard.classList.remove("show-all-info");
             } else {
-                thisCard.classList.add("show-info");
+                // only enter
+                thisCard.classList.remove("show-info");
             }
         },
     },

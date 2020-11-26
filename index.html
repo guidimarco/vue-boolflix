@@ -78,7 +78,8 @@
                         :style="setCardBgr(film.backdrop_path)"
                         :ref="`${index}`"
                         @mouseenter="showInfo(index)"
-                        @mouseleave="showInfo(index)">
+                        @mouseleave="removeInfo(index)"
+                        @click="showAllInfo(index)">
 
                             <div class="overlay"></div>
 
@@ -87,9 +88,17 @@
                                 <h3><!-- film title or serie name -->
                                     {{ film.title ? film.title : film.name }}
                                 </h3>
-                                <span>
-                                    {{ film.original_title ? film.original_title.substring(0, 24) : film.original_name.substring(0, 24) }}
-                                </span><!-- END stamp original title or name -->
+                                <ul>
+                                    <li>
+                                        Lingua originale: {{ film.original_language }}
+                                    </li>
+                                    <li>
+                                        Titolo originale: {{ film.original_title ? film.original_title : film.original_name }}
+                                    </li>
+                                    <li v-if="film.overview">
+                                        Overview: {{ film.overview.length <= 100 ?  film.overview : film.overview.substring(0,100) + '...' }}
+                                    </li>
+                                </ul><!-- END stamp all info -->
                                 <!-- END film-title -->
                             </div>
 
