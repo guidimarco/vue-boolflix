@@ -17,8 +17,44 @@ var app = new Vue({ // VUE INSTANCE
         isLoading: false, // boolean for loading
         films: [],
         filmsCast: [], // cast's for each film in films
+        Genres: [], // all genre
     },
     methods: {
+        getGenres: function() {
+            // set axios paramas
+            let genrePar = {
+                params: {
+                    api_key: myApiKey,
+                    language: "it",
+                }
+            } // current search parameters
+            let finalUrl = "genre/movie/list";
+
+            axios
+                .get(apiUrl + finalUrl, genrePar)
+                .then( (answer) => {
+                    this.Genres = answer.data.genres;
+                })
+            ;
+        },
+        stampGenre: function(genresArray) {
+            // local var
+            let filmGenres = [];
+
+            // check every film-genre
+            for (var i = 0; i < genresArray.length; i++) {
+                let currentIdGenre = genresArray[i];
+
+                // find the genre with same id
+                let thisGenre = this.Genres.filter( (genre) => {
+                    return genre.id === currentIdGenre
+                });
+
+                filmGenres.push(thisGenre[0].name);
+            }
+
+            return filmGenres.join(", ");
+        },
         getFilms: function() {
             // local VAR
             let thisSearch = this.searchText.trim(); // user's search
@@ -56,17 +92,17 @@ var app = new Vue({ // VUE INSTANCE
                     })
                 ;
 
-                // axios // axios request --> tv series
-                //     .get(apiUrl + "search/tv", currentPar)
-                //     .then( (answer) => {
-                //         this.films = this.films.concat(answer.data.results);
-                //
-                //         this.getCasts(); // get the cast
-                //
-                //         // set the DOM
-                //         this.isLoading = false; // END the loading-render
-                //     })
-                // ;
+                axios // axios request --> tv series
+                    .get(apiUrl + "search/tv", currentPar)
+                    .then( (answer) => {
+                        this.films = this.films.concat(answer.data.results);
+
+                        this.getCasts(); // get the cast
+
+                        // set the DOM
+                        this.isLoading = false; // END the loading-render
+                    })
+                ;
             } // END if: get films
         },
         getCasts: function() {
@@ -174,6 +210,6 @@ var app = new Vue({ // VUE INSTANCE
         },
     },
     mounted: function() {
-
+        this.getGenres();
     },
 });
