@@ -14,6 +14,7 @@ var app = new Vue({ // VUE INSTANCE
         searchText: "", // search-bar input
         searchMsg: "", // user's search for display
         isLoading: false, // boolean for loading
+        activeFilm: -1, // film with user-focus
         films: [],
     },
     methods: {
@@ -115,31 +116,6 @@ var app = new Vue({ // VUE INSTANCE
                 this.$refs.searchInput.focus();
             } else {
                 this.inputClass = "";
-            }
-        },
-        showInfo: function(filmIndex) {
-            // add class to this card (index)
-            thisCard = this.$refs[filmIndex][0]; // this card
-
-            thisCard.classList.add("show-info");
-        },
-        showAllInfo: function(filmIndex) {
-            // add class to this card (index)
-            thisCard = this.$refs[filmIndex][0]; // this card
-
-            thisCard.classList.add("show-all-info");
-        },
-        removeInfo: function(filmIndex) {
-            // remove all class to this card (index)
-            thisCard = this.$refs[filmIndex][0]; // this card
-
-            if (thisCard.classList.contains("show-info") && thisCard.classList.contains("show-all-info")) {
-                // all info (enter and click)
-                thisCard.classList.remove("show-info");
-                thisCard.classList.remove("show-all-info");
-            } else {
-                // only enter
-                thisCard.classList.remove("show-info");
             }
         },
     },

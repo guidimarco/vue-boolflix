@@ -75,13 +75,7 @@
                         <!-- film card -->
                         <div v-for="(film, index) in films"
                         class="film-card"
-                        :style="setCardBgr(film.backdrop_path)"
-                        :ref="`${index}`"
-                        @mouseenter="showInfo(index)"
-                        @mouseleave="removeInfo(index)"
-                        @click="showAllInfo(index)">
-
-                            <div class="overlay"></div>
+                        :style="setCardBgr(film.backdrop_path)">
 
                             <div class="film-info">
                                 <!-- title -->
@@ -96,7 +90,7 @@
                                         Titolo originale: {{ film.original_title ? film.original_title : film.original_name }}
                                     </li>
                                     <li v-if="film.overview">
-                                        Overview: {{ film.overview.length <= 100 ?  film.overview : film.overview.substring(0,100) + '...' }}
+                                        Overview: {{ film.overview }}
                                     </li>
                                 </ul><!-- END stamp all info -->
                                 <!-- END film-title -->

@@ -9,14 +9,6 @@ body {
     font-family: 'Lato', sans-serif;
 }
 
-ul {
-    list-style-type: none;
-    text-align: left;
-    text-align: left;
-    list-style-type: circle;
-    margin-left: 15px;
-}
-
 h1 {/* boolflix in header */
     color: red;
     line-height: 70px;
@@ -116,7 +108,6 @@ header .container {
     margin: auto;
     animation: loading-animation 0.5s linear infinite;
 }
-
 @keyframes loading-animation {
     0% {transform: rotate(0deg);}
     100% {transform: rotate(360deg);}
@@ -136,83 +127,56 @@ header .container {
     background-size: cover;
     background-position: center;
     cursor: pointer;
+    overflow-y: hidden;
+    transition: all 1s ease 0.5s;
+}
+.film-card:hover {
+    border: 2px solid white;
 }
 
-.film-card .overlay {
-    display: flex;
-    background-color: rgba(20, 20, 20, 0.9);
-    position: absolute;
-    top: 100%; left: 0; right: 0; bottom: 0;
-    transition: top 1s;
-}
-.film-card.show-info .overlay {
-    top: 60%;
-}
-.film-card.show-info.show-all-info .overlay {
-    top: 0%;
-}
-.film-card.show-info .overlay:hover {
-    cursor: pointer;
-}
-
+/* *3-fold film-info */
 .film-card .film-info {
     display: flex; flex-direction: column;
-    justify-content: center; align-items: center;
-    padding: 5px 10px 15px;
+    justify-content: flex-start; align-items: center;
+    background-color: rgba(20, 20, 20, 0.8);
     text-align: center;
+    padding: 15px 10px 5px;
     position: absolute;
     top: 60%; left: 0; right: 0; bottom: 0;
-    transition: top 0.2s linear 1s;
+    transition: all 1s ease 0.5s;
 }
-.film-card.show-info.show-all-info .film-info {
-    animation: showAllInfo 1s linear 0.5s 1 normal forwards;
+.film-card:hover .film-info {
+    top: 0%;
+    padding: 40px 10px 5px;
+    background-color: rgba(20, 20, 20, 1);
+    overflow-y: auto;
 }
-@keyframes showAllInfo {
-    0% {  }
-    100% { top: 0%; padding: 15px 10px 15px; align-items: flex-start; }
-}
-.film-card .film-info h3 {
+.film-card .film-info h3 { /* title */
     font-size: 16px;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0);
+    color: rgba(255, 255, 255, 0.8);
 }
-.film-card.show-info .film-info h3 {
-    animation: showTitle 1s linear 0.5s 1 normal forwards;
-}
-@keyframes showTitle {
-    0% { color: rgba(255, 255, 255, 0); }
-    100% { color: rgba(255, 255, 255, 1); }
-}
-.film-card.show-info.show-all-info .film-info ul {
-    animation: showAll 1s linear 0.5s 1 normal forwards;
-}
-@keyframes showAll {
-    0% {  }
-    100% { height: unset; color: rgba(255, 255, 255, 1); opacity: 1; }
-}
-.film-card .film-info ul {
-    height: 0;
-    font-size: 14px;
+.film-card .film-info ul { /* other info */
+    display: none;
+    list-style-type: none;
+    text-align: left; font-size: 14px;
     text-transform: none;
-    color: rgba(255, 255, 255, 0); opacity: 0;
+    color: rgba(255, 255, 255, 1);
+    align-self: flex-start;
 }
-.film-card.show-info.show-all-info .film-info ul {
+.film-card:hover .film-info ul { /* other info */
     display: inline-block;
 }
 
+/* **3-fold end film-info*/
+
+/* *3-fold film-lang */
 .film-card .film-lang {
     display: flex;
-    text-transform: uppercase;
     justify-content: center; align-items: center;
+    text-transform: uppercase;
     position: absolute; top: 5px; left: 5px;
     opacity: 0; transition: opacity 1s linear 0.5s;
-}
-.film-card.show-info .film-lang {
-    opacity: 1;
-    transition: all 1s linear 0.5s;
-}
-.film-card.show-info.show-all-info .film-lang {
-    opacity: 0;
 }
 .film-card .film-lang span {
     color: rgba(0, 0, 0, 1);
@@ -224,25 +188,33 @@ header .container {
 .film-card .film-lang img {
     width: 40px;
     border-radius: 10px;
-    border: 2px solid white;
+}
+.film-card:hover .film-lang {
+    opacity: 1;
+    transition: all 1s linear 0.5s;
 }
 
+/* **3-fold end film-lang*/
+
+/* *3-fold film-stars */
 .film-card .stars {
     display: flex; align-items: center;
     height: 20px; border-radius: 10px;
     padding: 0 5px;
     background-color: rgba(255, 255, 255, 1);
-    position: absolute; top: 100%; left: 50%;
+    position: absolute; top: 60%; left: 50%;
     transform: translate(-50%, -50%);
     color: rgba(20, 20, 20, 1); font-size: 12px;
-    opacity: 0; transition: opacity 1s linear 0.5s;
-}
-.film-card.show-info .stars {
-    opacity: 1;
+    transition: top 1s ease 0.5s;
 }
 .film-card .stars i {
     margin: 0 2px;
 }
+
+.film-card:hover .stars {
+    top: 15px;
+}
+/* **3-fold end film-stars*/
 
 /* #/2-fold main */
 
