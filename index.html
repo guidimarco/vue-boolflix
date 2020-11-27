@@ -89,6 +89,9 @@
                                     <li>
                                         Titolo originale: {{ film.original_title ? film.original_title : film.original_name }}
                                     </li>
+                                    <li>
+                                        Cast: {{ stampCast(film.id) }}
+                                    </li>
                                     <li v-if="film.overview">
                                         Overview: {{ film.overview }}
                                     </li>

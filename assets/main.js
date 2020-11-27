@@ -47,7 +47,6 @@ var app = new Vue({ // VUE INSTANCE
                 axios // axios request --> films
                     .get(apiUrl + "search/movie", currentPar)
                     .then( (answer) => {
-                        console.log("i've got the films");
                         this.films = this.films.concat(answer.data.results);
 
                         this.getCasts(); // get the cast
@@ -90,34 +89,34 @@ var app = new Vue({ // VUE INSTANCE
                 axios
                     .get(apiUrl + finalUrl, castPar)
                     .then( (answer) => {
-
-                        console.log("risposta");
-                        console.log(currentId);
-                        console.log(answer);
-
                         // local var
                         let filmCastArray = answer.data.cast;
 
                         let thisCastObj = { // cast obj --> to push
                             id: currentId,
-                            cast: filmCastArray.slice(0, 4),
+                            cast: filmCastArray.slice(0, 5),
                         }
-                        console.log(thisCastObj);
 
                         // push into the data
                         this.filmsCast.push(thisCastObj);
                     })
                 ;
+            });
+        },
+        stampCast: function(filmId) {
+            let allCast = [];
 
+            this.filmsCast.forEach( (film) => {
+                // search for id
+                if (film.id == filmId) {
+                    // return the cast
+                    film.cast.forEach( (actor) => {
+                        allCast.push(actor.name);
+                    });
+                }
             });
 
-
-
-
-
-
-
-
+            return allCast.join(", ");
         },
         setCardBgr: function(backdropPath) {
             // set the bgr card
