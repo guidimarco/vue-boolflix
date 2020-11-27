@@ -9,13 +9,14 @@ var app = new Vue({ // VUE INSTANCE
     data: {
         myFlags: "de en es fr it ja pt", // all my flags
         altFlag: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/No_flag.svg/1280px-No_flag.svg.png", // alternative flag
+        altBgr: "https://www.ancebiella.it/wp-content/uploads/2016/01/img-not-found-395x256.jpg", // alternative background img (for path-null-film and 404 error)
         maxStars: 5, // maximum rate vote
         inputClass: "", // css classes for input
         searchText: "", // search-bar input
         searchMsg: "", // user's search for display
         isLoading: false, // boolean for loading
-        activeFilm: -1, // film with user-focus
         films: [],
+        filmsCast: [], // cast's for each film in films
     },
     methods: {
         getFilms: function() {
@@ -46,37 +47,91 @@ var app = new Vue({ // VUE INSTANCE
                 axios // axios request --> films
                     .get(apiUrl + "search/movie", currentPar)
                     .then( (answer) => {
+                        console.log("i've got the films");
                         this.films = this.films.concat(answer.data.results);
+
+                        this.getCasts(); // get the cast
 
                         // set the DOM
                         this.isLoading = false; // END the loading-render
                     })
                 ;
 
-                axios // axios request --> tv series
-                    .get(apiUrl + "search/tv", currentPar)
-                    .then( (answer) => {
-                        this.films = this.films.concat(answer.data.results);
-
-                        // set the DOM
-                        this.isLoading = false; // END the loading-render
-                    })
-                ;
+                // axios // axios request --> tv series
+                //     .get(apiUrl + "search/tv", currentPar)
+                //     .then( (answer) => {
+                //         this.films = this.films.concat(answer.data.results);
+                //
+                //         this.getCasts(); // get the cast
+                //
+                //         // set the DOM
+                //         this.isLoading = false; // END the loading-render
+                //     })
+                // ;
             } // END if: get films
         },
+        getCasts: function() {
+            // set axios paramas
+            let castPar = {
+                params: {
+                    api_key: myApiKey,
+                    language: "it",
+                }
+            } // current search parameters
+
+            // for each film in films
+            this.films.forEach( (film, i) => {
+                // get current film id
+                let currentId = this.films[i].id;
+
+                let finalUrl = "movie/" + currentId + "/credits";
+
+                // ask axios for credits
+                axios
+                    .get(apiUrl + finalUrl, castPar)
+                    .then( (answer) => {
+
+                        console.log("risposta");
+                        console.log(currentId);
+                        console.log(answer);
+
+                        // local var
+                        let filmCastArray = answer.data.cast;
+
+                        let thisCastObj = { // cast obj --> to push
+                            id: currentId,
+                            cast: filmCastArray.slice(0, 4),
+                        }
+                        console.log(thisCastObj);
+
+                        // push into the data
+                        this.filmsCast.push(thisCastObj);
+                    })
+                ;
+
+            });
+
+
+
+
+
+
+
+
+        },
         setCardBgr: function(backdropPath) {
-            // backdropPath --> final part of url backdrop-poster
+            // set the bgr card
 
-            if (backdropPath != null) {
-                // it's not null --> assembly url and return it
-
-                // local var
-                let thisBgrImg; // this background style (url or white)
-
-                thisBgrImg = "background-image: url(\"" + posterUrl + posterSize + backdropPath + "\";";
-
-                return thisBgrImg;
+            if (backdropPath === null) {
+                // it's null --> alt background
+                return this.setAltBgr();
+            } else {
+                // it's not null --> poster bgr
+                return "background-image: url(\"" + posterUrl + posterSize + backdropPath + "\";";
             }
+        },
+        setAltBgr: function() {
+            return "background-image: url(\"" + this.altBgr + "\";";
         },
         setFlag: function(filmFlag) {
             // filmFlag --> current film language (same as flag)
