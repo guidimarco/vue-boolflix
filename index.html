@@ -89,8 +89,8 @@
                                     <li>
                                         Titolo originale: {{ film.original_title ? film.original_title : film.original_name }}
                                     </li>
-                                    <li>
-                                        Genere:
+                                    <li v-if="film.genre_ids != undefined">
+                                        Genere: {{ stampGenres(film.genre_ids) }}
                                     </li>
                                     <li v-if="film.cast != undefined">
                                         Cast: {{ stampCast(film.cast) }}

@@ -34,7 +34,25 @@ var app = new Vue({ // VUE INSTANCE
             axios
                 .get(apiUrl + finalUrl, genrePar)
                 .then( (answer) => {
-                    this.Genres = this.Genres.concat(answer.data.genres);
+                    if (!this.Genres.length) {
+                        // genres array empty
+                        this.Genres = answer.data.genres;
+                    } else {
+                        // it's not empty --> i have to filter
+
+                        // get all id
+                        let currentGenres = [];
+                        this.Genres.forEach( (genre) => {
+                            currentGenres.push(genre.id);
+                        });
+
+                        // filter new data
+                        let newGenres = answer.data.genres.filter( () => {
+                            !currentGenres.includes(answer.data.genres.id)
+                        });
+
+                        this.Genres = this.Genres.concat(newGenres);
+                    }
                 })
             ;
 
@@ -43,7 +61,25 @@ var app = new Vue({ // VUE INSTANCE
             axios
                 .get(apiUrl + finalUrl, genrePar)
                 .then( (answer) => {
-                    this.Genres = this.Genres.concat(answer.data.genres);
+                    if (!this.Genres.length) {
+                        // genres array empty
+                        this.Genres = answer.data.genres;
+                    } else {
+                        // it's not empty --> i have to filter
+
+                        // get all id
+                        let currentGenres = [];
+                        this.Genres.forEach( (genre) => {
+                            currentGenres.push(genre.id);
+                        });
+
+                        // filter new data
+                        let newGenres = answer.data.genres.filter( () => {
+                            !currentGenres.includes(answer.data.genres.id)
+                        });
+
+                        this.Genres = this.Genres.concat(newGenres);
+                    }
                 })
             ;
         }, // API get all genres (film and serie)
@@ -201,25 +237,23 @@ var app = new Vue({ // VUE INSTANCE
 
             return thisCast.join(", ");
         }, // stamp in the dom
-
-
-        stampGenre: function(genresArray) {
+        stampGenres: function(genresArray) {
             // local var
-            let filmGenres = [];
+            let thisGenres = [];
 
             // check every film-genre
             for (var i = 0; i < genresArray.length; i++) {
                 let currentIdGenre = genresArray[i];
 
                 // find the genre with same id
-                let thisGenre = this.Genres.filter( (genre) => {
-                    return genre.id === currentIdGenre
+                this.Genres.forEach( (genre) => {
+                    if (genre.id == currentIdGenre) {
+                        thisGenres.push(genre.name);
+                    }
                 });
-
-                filmGenres.push(thisGenre[0].name);
             }
 
-            return filmGenres.join(", ");
+            return thisGenres.join(", ");
         }, // CHECK stamp genre in card
 
         // SEARCH BAR function
