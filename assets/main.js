@@ -16,10 +16,10 @@ var app = new Vue({ // VUE INSTANCE
         searchMsg: "", // user's search for display
         isLoading: false, // boolean for loading
         films: [],
-        filmsCast: [], // cast's for each film in films
         Genres: [], // all genre
     },
     methods: {
+        // API function
         getGenres: function() {
             // set axios paramas
             let genrePar = {
@@ -28,33 +28,25 @@ var app = new Vue({ // VUE INSTANCE
                     language: "it",
                 }
             } // current search parameters
-            let finalUrl = "genre/movie/list";
 
+            // search movie genres
+            let finalUrl = "genre/movie/list";
             axios
                 .get(apiUrl + finalUrl, genrePar)
                 .then( (answer) => {
-                    this.Genres = answer.data.genres;
+                    this.Genres = this.Genres.concat(answer.data.genres);
                 })
             ;
-        },
-        stampGenre: function(genresArray) {
-            // local var
-            let filmGenres = [];
 
-            // check every film-genre
-            for (var i = 0; i < genresArray.length; i++) {
-                let currentIdGenre = genresArray[i];
-
-                // find the genre with same id
-                let thisGenre = this.Genres.filter( (genre) => {
-                    return genre.id === currentIdGenre
-                });
-
-                filmGenres.push(thisGenre[0].name);
-            }
-
-            return filmGenres.join(", ");
-        },
+            // new search: tv serie genres
+            finalUrl = "genre/tv/list";
+            axios
+                .get(apiUrl + finalUrl, genrePar)
+                .then( (answer) => {
+                    this.Genres = this.Genres.concat(answer.data.genres);
+                })
+            ;
+        }, // API get all genres (film and serie)
         getFilms: function() {
             // local VAR
             let thisSearch = this.searchText.trim(); // user's search
@@ -83,9 +75,11 @@ var app = new Vue({ // VUE INSTANCE
                 axios // axios request --> films
                     .get(apiUrl + "search/movie", currentPar)
                     .then( (answer) => {
-                        this.films = this.films.concat(answer.data.results);
+                        let apiFilms = answer.data.results;
 
-                        this.getCasts(); // get the cast
+                        this.addMovieCasts(apiFilms); // get the cast (with api) and add a new property
+
+                        this.films = this.films.concat(apiFilms);
 
                         // set the DOM
                         this.isLoading = false; // END the loading-render
@@ -95,17 +89,19 @@ var app = new Vue({ // VUE INSTANCE
                 axios // axios request --> tv series
                     .get(apiUrl + "search/tv", currentPar)
                     .then( (answer) => {
-                        this.films = this.films.concat(answer.data.results);
+                        let apiSeries = answer.data.results;
 
-                        this.getCasts(); // get the cast
+                        this.addSerieCasts(apiSeries); // get the cast (with api) and add a new property
+
+                        this.films = this.films.concat(apiSeries);
 
                         // set the DOM
                         this.isLoading = false; // END the loading-render
                     })
                 ;
             } // END if: get films
-        },
-        getCasts: function() {
+        }, // API get film and serie tv
+        addMovieCasts: function(filmsArray) {
             // set axios paramas
             let castPar = {
                 params: {
@@ -115,45 +111,46 @@ var app = new Vue({ // VUE INSTANCE
             } // current search parameters
 
             // for each film in films
-            this.films.forEach( (film, i) => {
-                // get current film id
-                let currentId = this.films[i].id;
-
+            filmsArray.forEach( (film) => {
+                // current id and url
+                let currentId = film.id;
                 let finalUrl = "movie/" + currentId + "/credits";
 
                 // ask axios for credits
                 axios
                     .get(apiUrl + finalUrl, castPar)
                     .then( (answer) => {
-                        // local var
-                        let filmCastArray = answer.data.cast;
-
-                        let thisCastObj = { // cast obj --> to push
-                            id: currentId,
-                            cast: filmCastArray.slice(0, 5),
-                        }
-
-                        // push into the data
-                        this.filmsCast.push(thisCastObj);
+                        Vue.set(film, 'cast', answer.data.cast);
                     })
                 ;
             });
-        },
-        stampCast: function(filmId) {
-            let allCast = [];
-
-            this.filmsCast.forEach( (film) => {
-                // search for id
-                if (film.id == filmId) {
-                    // return the cast
-                    film.cast.forEach( (actor) => {
-                        allCast.push(actor.name);
-                    });
+        }, // API get movie cast and add to film-obj
+        addSerieCasts: function(tvSerieArray) {
+            // set axios paramas
+            let castPar = {
+                params: {
+                    api_key: myApiKey,
+                    language: "it",
                 }
-            });
+            } // current search parameters
 
-            return allCast.join(", ");
-        },
+            // for each film in films
+            tvSerieArray.forEach( (serie) => {
+                // current id and url
+                let currentId = serie.id;
+                let finalUrl = "tv/" + currentId + "/credits";
+
+                // ask axios for credits
+                axios
+                    .get(apiUrl + finalUrl, castPar)
+                    .then( (answer) => {
+                        Vue.set(serie, 'cast', answer.data.cast);
+                    })
+                ;
+            });
+        },  // API get movie cast and add to film-obj
+
+        // CARD function
         setCardBgr: function(backdropPath) {
             // set the bgr card
 
@@ -164,10 +161,10 @@ var app = new Vue({ // VUE INSTANCE
                 // it's not null --> poster bgr
                 return "background-image: url(\"" + posterUrl + posterSize + backdropPath + "\";";
             }
-        },
+        }, // set card background
         setAltBgr: function() {
             return "background-image: url(\"" + this.altBgr + "\";";
-        },
+        }, // return alternative background (see data)
         setFlag: function(filmFlag) {
             // filmFlag --> current film language (same as flag)
             let flagUrl; // final flag src --> TO RETURN
@@ -181,22 +178,51 @@ var app = new Vue({ // VUE INSTANCE
             }
 
             return flagUrl;
-        },
+        }, // set language flag
         isFilm: function(filmIndex) {
-            // return true if it's film, false if it's a serie
-
             // local var
             let thisType = app.films[filmIndex].media_type; // this media-type
 
             return thisType == "movie";
-        },
+        }, // return true if it's film, false if it's a serie
         setStars: function(filmVote) {
             // filmVote: from 1 to 10
             let numberOfStars; // number of stars --> TO RETURN
 
             // new-vote function: from 0 to 5
             return numberOfStars = Math.ceil(filmVote * this.maxStars / 10);
-        },
+        }, // set vote stars
+        stampCast: function(filmCast) {
+            let thisCast = [];
+
+            filmCast.slice(0,5).forEach( (actor) => {
+                thisCast.push(actor.name);
+            });
+
+            return thisCast.join(", ");
+        }, // stamp in the dom
+
+
+        stampGenre: function(genresArray) {
+            // local var
+            let filmGenres = [];
+
+            // check every film-genre
+            for (var i = 0; i < genresArray.length; i++) {
+                let currentIdGenre = genresArray[i];
+
+                // find the genre with same id
+                let thisGenre = this.Genres.filter( (genre) => {
+                    return genre.id === currentIdGenre
+                });
+
+                filmGenres.push(thisGenre[0].name);
+            }
+
+            return filmGenres.join(", ");
+        }, // CHECK stamp genre in card
+
+        // SEARCH BAR function
         toggleSearchBar: function() {
             if (!this.inputClass) {
                 // if current class == "" --> add "visible"
@@ -207,7 +233,7 @@ var app = new Vue({ // VUE INSTANCE
             } else {
                 this.inputClass = "";
             }
-        },
+        }, // toggle class "search-on"
     },
     mounted: function() {
         this.getGenres();

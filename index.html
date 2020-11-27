@@ -90,10 +90,10 @@
                                         Titolo originale: {{ film.original_title ? film.original_title : film.original_name }}
                                     </li>
                                     <li>
-                                        Genere: {{ stampGenre(film.genre_ids) }}
+                                        Genere:
                                     </li>
-                                    <li>
-                                        Cast: {{ stampCast(film.id) }}
+                                    <li v-if="film.cast != undefined">
+                                        Cast: {{ stampCast(film.cast) }}
                                     </li>
                                     <li v-if="film.overview">
                                         Overview: {{ film.overview }}
