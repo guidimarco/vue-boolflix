@@ -15,6 +15,7 @@ var app = new Vue({ // VUE INSTANCE
         searchText: "", // search-bar input
         searchMsg: "", // user's search for display
         isLoading: false, // boolean for loading
+        typeFilter: ["movie", "tv"], // filter for type --> default all selected
         films: [],
         Genres: [], // all genre
     },
@@ -157,10 +158,11 @@ var app = new Vue({ // VUE INSTANCE
                     .get(apiUrl + finalUrl, castPar)
                     .then( (answer) => {
                         Vue.set(film, 'cast', answer.data.cast);
+                        Vue.set(film, 'media_type', "movie");
                     })
                 ;
             });
-        }, // API get movie cast and add to film-obj
+        }, // API get movie cast, add to film-obj and add media type
         addSerieCasts: function(tvSerieArray) {
             // set axios paramas
             let castPar = {
@@ -181,10 +183,11 @@ var app = new Vue({ // VUE INSTANCE
                     .get(apiUrl + finalUrl, castPar)
                     .then( (answer) => {
                         Vue.set(serie, 'cast', answer.data.cast);
+                        Vue.set(serie, 'media_type', "tv");
                     })
                 ;
             });
-        },  // API get movie cast and add to film-obj
+        },  // API get movie cast, add to film-obj and add media type
 
         // CARD function
         setCardBgr: function(backdropPath) {
@@ -215,12 +218,6 @@ var app = new Vue({ // VUE INSTANCE
 
             return flagUrl;
         }, // set language flag
-        isFilm: function(filmIndex) {
-            // local var
-            let thisType = app.films[filmIndex].media_type; // this media-type
-
-            return thisType == "movie";
-        }, // return true if it's film, false if it's a serie
         setStars: function(filmVote) {
             // filmVote: from 1 to 10
             let numberOfStars; // number of stars --> TO RETURN
@@ -268,8 +265,22 @@ var app = new Vue({ // VUE INSTANCE
                 this.inputClass = "";
             }
         }, // toggle class "search-on"
+
+        // SEARCH FILTER
+        changeTypeFilter: function(type) {
+            if (this.typeFilter.includes(type)) {
+                this.typeFilter = this.typeFilter.filter( (value) => {
+                    return value != type;
+                });
+            } else {
+                this.typeFilter.push(type);
+            }
+        }, // filter for media type
     },
     mounted: function() {
         this.getGenres();
     },
+    watch: {
+
+    }
 });

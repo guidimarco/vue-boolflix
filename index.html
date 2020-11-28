@@ -62,18 +62,41 @@
                     <div class="loading" v-if="isLoading"></div>
                     <div v-else-if="searchMsg" class="card-container">
                         <!-- search-msg -->
-                        <h2 v-if="films.length">
-                            Dai un occhiata ai titoli correlati:
-                            <span>
-                                "{{ searchMsg }}"
-                            </span>
-                        </h2>
+                        <div v-if="films.length" class="search-filter">
+                            <h2>
+                                Dai un occhiata ai titoli correlati:
+                                <span>
+                                    "{{ searchMsg }}"
+                                </span>
+                            </h2>
+
+                            <div class="toggle-films">
+                                <div class="button-container">
+                                    <button type="button" name="button"
+                                    :class="typeFilter.includes('movie') ? 'selected' : ''"
+                                    @click="changeTypeFilter('movie')">
+                                        Film
+                                    </button>
+
+                                    <button type="button" name="button"
+                                    :class="typeFilter.includes('tv') ? 'selected' : ''"
+                                    @click="changeTypeFilter('tv')">
+                                        Serie
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="select-films">
+
+                            </div>
+                        </div><!-- END search-msg -->
                         <span class="no-card" v-else><!-- search-msg: no results -->
                             Nessun risultato per la tua ricerca di "{{ searchMsg }}".
                         </span>
 
                         <!-- film card -->
                         <div v-for="(film, index) in films"
+                        v-if="typeFilter.includes(film.media_type)"
                         class="film-card"
                         :style="setCardBgr(film.backdrop_path)">
 
@@ -84,19 +107,29 @@
                                 </h3>
                                 <ul>
                                     <li>
-                                        Lingua originale: {{ film.original_language }}
+                                        Lingua originale: <span>
+                                            {{ film.original_language }}
+                                        </span>
                                     </li>
                                     <li>
-                                        Titolo originale: {{ film.original_title ? film.original_title : film.original_name }}
+                                        Titolo originale: <span>
+                                            {{ film.original_title ? film.original_title : film.original_name }}
+                                        </span>
                                     </li>
-                                    <li v-if="film.genre_ids != undefined">
-                                        Genere: {{ stampGenres(film.genre_ids) }}
+                                    <li v-if="film.genre_ids != undefined && film.genre_ids.length">
+                                        Genere: <span>
+                                            {{ stampGenres(film.genre_ids) }}
+                                        </span>
                                     </li>
-                                    <li v-if="film.cast != undefined">
-                                        Cast: {{ stampCast(film.cast) }}
+                                    <li v-if="film.cast != undefined && film.cast.length">
+                                        Cast: <span>
+                                            {{ stampCast(film.cast) }}
+                                        </span>
                                     </li>
                                     <li v-if="film.overview">
-                                        Overview: {{ film.overview }}
+                                        Overview: <span>
+                                            {{ film.overview }}
+                                        </span>
                                     </li>
                                 </ul><!-- END stamp all info -->
                                 <!-- END film-title -->
