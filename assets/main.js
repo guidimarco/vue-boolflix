@@ -75,8 +75,8 @@ var app = new Vue({ // VUE INSTANCE
                         });
 
                         // filter new data
-                        let newGenres = answer.data.genres.filter( () => {
-                            !currentGenres.includes(answer.data.genres.id)
+                        let newGenres = answer.data.genres.filter( (value) => {
+                            return !currentGenres.includes(value.id);
                         });
 
                         this.Genres = this.Genres.concat(newGenres);
