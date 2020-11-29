@@ -114,13 +114,14 @@ header .container {
 }
 
 .search-filter {
-    width: 100%;
+    width: 100%; height: 50px;
+    display: flex; align-items: center;
+    justify-content: space-between;
 }
 .search-filter .toggle-films,
 .search-filter .select-films,
 .search-filter h2 {
     display: flex; align-items: center; float: left;
-    width: calc(100% / 3);
 }
 
 .search-filter .toggle-films {
@@ -154,6 +155,23 @@ header .container {
 .search-filter .toggle-films .button-container button:last-child {
     border-radius: 0 5px 5px 0;
     margin-left: -1px;
+}
+
+.search-filter .select-films {
+    justify-content: flex-end;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+}
+.search-filter .select-films select {
+    height: 24px;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: rgba(20, 20, 20, 1);
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.search-filter .select-films select:focus {
+    outline: -webkit-focus-ring-color auto 0px;
 }
 
 .no-card {

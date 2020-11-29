@@ -64,10 +64,7 @@
                         <!-- search-msg -->
                         <div v-if="films.length" class="search-filter">
                             <h2>
-                                Dai un occhiata ai titoli correlati:
-                                <span>
-                                    "{{ searchMsg }}"
-                                </span>
+                                Dai un occhiata ai titoli correlati: <span>"{{ searchMsg }}"</span>
                             </h2>
 
                             <div class="toggle-films">
@@ -87,7 +84,16 @@
                             </div>
 
                             <div class="select-films">
-
+                                <select v-model="selectedGenre">
+                                    <option value="all">
+                                        Tutti i generi
+                                    </option>
+                                    <!-- inserire -->
+                                    <option :value="genre.id"
+                                        v-for="genre in Genres">
+                                        {{ genre.name }}
+                                    </option>
+                                </select>
                             </div>
                         </div><!-- END search-msg -->
                         <span class="no-card" v-else><!-- search-msg: no results -->
@@ -96,7 +102,7 @@
 
                         <!-- film card -->
                         <div v-for="(film, index) in films"
-                        v-if="typeFilter.includes(film.media_type)"
+                        v-if="isFiltered(film.media_type, film.genre_ids)"
                         class="film-card"
                         :style="setCardBgr(film.backdrop_path)">
 

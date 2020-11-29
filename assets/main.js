@@ -18,6 +18,7 @@ var app = new Vue({ // VUE INSTANCE
         typeFilter: ["movie", "tv"], // filter for type --> default all selected
         films: [],
         Genres: [], // all genre
+        selectedGenre: "all",
     },
     methods: {
         // API function
@@ -276,6 +277,24 @@ var app = new Vue({ // VUE INSTANCE
                 this.typeFilter.push(type);
             }
         }, // filter for media type
+        isSelectedGenre: function(filmGenres) {
+            let isSelected = true;
+
+            if (!filmGenres.includes(this.selectedGenre) && this.selectedGenre != "all") {
+                isSelected = false;
+            }
+
+            return isSelected;
+        }, // filter for genres: return true if film has selected genres or if user select all genres
+        isFiltered: function(filmType, filmIds) {
+            isThisCardFiltered = false;
+
+            if (this.typeFilter.includes(filmType) &&  this.isSelectedGenre(filmIds)) {
+                isThisCardFiltered = true;
+            }
+
+            return isThisCardFiltered;
+        }, // retur true if: card --> render dom
     },
     mounted: function() {
         this.getGenres();
